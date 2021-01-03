@@ -17,7 +17,7 @@
 #Todo 3: Write test script.
 
 import boto3
-from instance import Instance
+from instance import Instance, AWS_EC2
 from prettytable import PrettyTable
 
 
@@ -71,8 +71,6 @@ def server_menu(inst):
 
 
 def main_menu():
-    ec2 = boto3.client('ec2')
-
     # refresh_menu is used to loop back through the AWS query in order to refresh the
     #   status of the EC2 instances
     refresh_menu = True
@@ -81,7 +79,7 @@ def main_menu():
     #   the main menu
     while refresh_menu:
         # query AWS and generate main menu
-        response = ec2.describe_instances()
+        response = AWS_EC2.describe_instances()
 
         # extracts error code, exits program if there is an error, else continues
         response_code = response['ResponseMetadata']['HTTPStatusCode']

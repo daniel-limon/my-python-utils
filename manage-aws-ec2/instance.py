@@ -1,6 +1,8 @@
 import boto3
 from botocore.exceptions import ClientError
 
+AWS_EC2 = boto3.client('ec2')
+
 
 class Instance:
 
@@ -14,45 +16,39 @@ class Instance:
         self.security_groups = instance['SecurityGroups']
 
     def start_instance(self):
-        ec2 = boto3.client('ec2')
-
         # dry run
         try:
-            ec2.start_instances(InstanceIds=[self.instance_id], DryRun=True)
+            AWS_EC2.start_instances(InstanceIds=[self.instance_id], DryRun=True)
         except ClientError as e:
             if 'DryRunOperation' not in str(e):
                 raise
 
         # Dry run succeeded, run start_instances without dry run
         try:
-            response = ec2.start_instances(InstanceIds=[self.instance_id], DryRun=False)
+            response = AWS_EC2.start_instances(InstanceIds=[self.instance_id], DryRun=False)
             print(response)
         except ClientError as e:
             print(e)
 
     def stop_instance(self):
-        ec2 = boto3.client('ec2')
-
         # dry run
         try:
-            ec2.stop_instances(InstanceIds=[self.instance_id], DryRun=True)
+            AWS_EC2.stop_instances(InstanceIds=[self.instance_id], DryRun=True)
         except ClientError as e:
             if 'DryRunOperation' not in str(e):
                 raise
 
         # Dry run succeeded, call stop_instances without dry run
         try:
-            response = ec2.stop_instances(InstanceIds=[self.instance_id], DryRun=False)
+            response = AWS_EC2.stop_instances(InstanceIds=[self.instance_id], DryRun=False)
             print(response)
         except ClientError as e:
             print(e)
 
     def reboot_instance(self):
-        ec2 = boto3.client('ec2')
-
         # dry run
         try:
-            ec2.reboot_instances(InstanceIds=[self.instance_id], DryRun=True)
+            AWS_EC2.reboot_instances(InstanceIds=[self.instance_id], DryRun=True)
         except ClientError as e:
             if 'DryRunOperation' not in str(e):
                 print("You don't have permission to reboot instances.")
@@ -60,7 +56,7 @@ class Instance:
 
         # dry run succeeded, calls reboot_instance without dry run
         try:
-            response = ec2.reboot_instances(InstanceIds=[self.instance_id], DryRun=False)
+            response = AWS_EC2.reboot_instances(InstanceIds=[self.instance_id], DryRun=False)
             print('Success', response)
         except ClientError as e:
             print('Error', e)
