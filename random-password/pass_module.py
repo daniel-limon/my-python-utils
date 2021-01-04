@@ -14,7 +14,7 @@ TYPE_ERROR = 'One or more passed values are of the incorrect type.'
 
 class Pass:
 
-    def __init__(self, pass_len = DEFAULT_LEN, complexity = True, special_chars = True):
+    def __init__(self, pass_len=DEFAULT_LEN, complexity=True, special_chars=True):
 
         # data validation
         if type(pass_len) != int or type(complexity) != bool or type(special_chars) != bool:

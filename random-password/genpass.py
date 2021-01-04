@@ -22,6 +22,6 @@ def cmd_arguments():
 ## executable starts here ##
 clArgs = cmd_arguments()
 
-password = Pass(clArgs.passlength, clArgs.complexity, clArgs.nospecialchars)
+password = Pass(clArgs.passlength, clArgs.nocomplexity, clArgs.nospecialchars)
 
 print(password.get_password())
