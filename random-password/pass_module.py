@@ -24,9 +24,7 @@ class Pass:
             raise ValueError(INVALID_PASSLEN_ERROR)
 
         if complexity:
-            if special_chars and pass_len < COMPLEX_COUNT * 4:
-                raise ValueError(LENGTH_ERROR)
-            elif pass_len < COMPLEX_COUNT * 3:
+            if pass_len < COMPLEX_COUNT * (4 if special_chars else 3):
                 raise ValueError(LENGTH_ERROR)
 
         # initializes object if data validation passes
